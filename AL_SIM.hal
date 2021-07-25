@@ -1,0 +1,124 @@
+# Last Edited: 21-07-25
+# LinuxCNC Version: 2.8
+
+
+
+# ---------- REALTIME COMPONENTS ----------
+# load all realtime components with names instead of numbers so that their function can easily be identified
+# realtime components that are used for postgui purposes are added to the servo thread at their corresponding point in AL_1105_SIM_postgui.hal
+
+loadrt   [KINS]KINEMATICS
+loadrt   [EMCMOT]EMCMOT                        base_period_nsec=[EMCMOT]BASE_PERIOD servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
+loadrt   ddt                                   names=ddt_x,ddt_xv,ddt_y,ddt_yv,ddt_z,ddt_zv
+loadrt   hypot                                 names=vel_xy,vel_xyz
+loadrt   comp                                  names=comp_x,comp_y,comp_z
+loadrt   not                                   names=not_x,not_y
+loadrt   sim_spindle                           names=sim_spindle
+loadrt   limit2                                names=limit_speed
+loadrt   lowpass                               names=spindle_mass
+loadrt   near                                  names=near_speed
+
+addf     motion-command-handler                servo-thread
+addf     motion-controller                     servo-thread
+addf     ddt_x                                 servo-thread
+addf     ddt_xv                                servo-thread
+addf     ddt_y                                 servo-thread
+addf     ddt_yv                                servo-thread
+addf     ddt_z                                 servo-thread
+addf     ddt_zv                                servo-thread
+addf     vel_xy                                servo-thread
+addf     vel_xyz                               servo-thread
+addf     comp_x                                servo-thread
+addf     comp_y                                servo-thread
+addf     comp_z                                servo-thread
+addf     not_x                                 servo-thread
+addf     not_y                                 servo-thread
+addf     limit_speed                           servo-thread
+addf     spindle_mass                          servo-thread
+addf     near_speed                            servo-thread
+addf     sim_spindle                           servo-thread
+
+
+
+# ---------- SIMULATED AXIS ----------
+# 1) create HAL signals for position commands from motion module loop position commands back to motion module feedback
+# 2) send the position commands through differentiators to generate velocity and accel signals
+# 3) Cartesian 2- and 3-axis velocities
+
+net      pos-x                                 joint.0.motor-pos-cmd               =>  joint.0.motor-pos-fb ddt_x.in
+net      pos-y                                 joint.1.motor-pos-cmd               =>  joint.1.motor-pos-fb ddt_y.in
+net      pos-z                                 joint.2.motor-pos-cmd               =>  joint.2.motor-pos-fb ddt_z.in
+
+net      vel-x                                 ddt_x.out                           =>  ddt_xv.in vel_xy.in0
+net      acc-x                                 ddt_xv.out
+net      vel-y                                 ddt_y.out                           =>  ddt_yv.in vel_xy.in1
+net      acc-y                                 ddt_yv.out
+net      vel-z                                 ddt_z.out                           =>  ddt_zv.in vel_xyz.in0
+net      acc-z                                 ddt_zv.out
+
+net      vel-xy                                vel_xy.out                          =>  vel_xyz.in1
+net      vel-xyz                               vel_xyz.out
+
+
+
+# ---------- SIMULATED HOME SWITCHES ----------
+
+setp     comp_x.in0                            [JOINT_0]HOME
+setp     comp_y.in0                            [JOINT_1]HOME
+setp     comp_z.in0                            [JOINT_2]HOME
+
+net      pos-x                                 comp_x.in1
+net      pos-y                                 comp_y.in1
+net      pos-z                                 comp_z.in1
+
+net      invert-x                              comp_x.out                          =>  not_x.in
+net      invert-y                              comp_y.out                          =>  not_y.in
+
+net      home-x                                not_x.out                           =>  joint.0.home-sw-in
+net      home-y                                not_y.out                           =>  joint.1.home-sw-in
+net      home-z                                comp_z.out                          =>  joint.2.home-sw-in
+
+
+
+# ---------- SIMULATED SPINDLE ----------
+
+setp     sim_spindle.scale                     0.01666667
+setp     spindle_mass.gain                     .07
+setp     near_speed.scale                      1.05
+
+net      spindle-acc-val                       limit_speed.maxv
+net      spindle-speed-cmd                     spindle.0.speed-out                 =>  limit_speed.in
+net      spindle-acc-limited                   limit_speed.out                     =>  sim_spindle.velocity-cmd
+
+net      spindle-acc-limited                   spindle_mass.in
+net      spindle-rpm-filtered                  spindle_mass.out                    =>  near_speed.in2
+net      spindle-speed-cmd                     near_speed.in1
+net      spindle-at-speed                      near_speed.out                      =>  spindle.0.at-speed
+
+
+
+# ---------- TOOLCHANGE ----------
+# create signals for tool loading loopback
+
+loadusr -W hal_manualtoolchange
+
+net      tool-change-request                   iocontrol.0.tool-change             =>  hal_manualtoolchange.change
+net      tool-change-confirmed                 iocontrol.0.tool-changed            <=  hal_manualtoolchange.changed
+net      tool-number                           iocontrol.0.tool-prep-number        =>  hal_manualtoolchange.number
+net      tool-prepare-loopback                 iocontrol.0.tool-prepare            =>  iocontrol.0.tool-prepared
+
+
+
+# ---------- ESTOP ----------
+
+net      estop-loop                            iocontrol.0.user-enable-out         =>  iocontrol.0.emc-enable-in
+
+
+
+# ---------- MIST/FLOOD ----------
+
+net      coolant-mist                          iocontrol.0.coolant-mist
+net      coolant-flood                         iocontrol.0.coolant-flood
+
+
+
