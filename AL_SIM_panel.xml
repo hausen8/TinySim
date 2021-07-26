@@ -83,36 +83,10 @@
                 <off_color>"#ff3000"</off_color>
             </rectled>
         </hbox>
-    </vbox>
-    <vbox>
-        <relief>RAISED</relief>
-        <bd>1</bd>
-        <hbox>
-            <label>
-                <text>"coolant-mist"</text>
-                <width>22</width>
-            </label>
-            <rectled>
-                <halpin>"mist"</halpin>
-                <width>20</width>
-                <height>20</height>
-                <on_color>"#80b000"</on_color>
-                <off_color>"#ff3000"</off_color>
-            </rectled>
-        </hbox>
-        <hbox>
-            <label>
-                <text>"coolant-flood"</text>
-                <width>22</width>
-            </label>
-            <rectled>
-                <halpin>"flood"</halpin>
-                <width>20</width>
-                <height>20</height>
-                <on_color>"#80b000"</on_color>
-                <off_color>"#ff3000"</off_color>
-            </rectled>
-        </hbox>
+            <button>
+                <halpin>"touch-all"</halpin>
+                <text>"G10 L20 P1 X0 Y0 Z0"</text>
+            </button>
     </vbox>
 </pyvcp>
 
