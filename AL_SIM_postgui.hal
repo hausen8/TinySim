@@ -13,8 +13,8 @@ net      home-x                                pyvcp.home-x
 net      home-y                                pyvcp.home-y
 net      home-z                                pyvcp.home-z
 
-net      coolant-mist                          pyvcp.mist
-net      coolant-flood                         pyvcp.flood
+# net      coolant-mist                          pyvcp.mist
+# net      coolant-flood                         pyvcp.flood
 
 
 
