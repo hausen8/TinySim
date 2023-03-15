@@ -1,0 +1,17 @@
+# Last Edited: 21-07-25
+# LinuxCNC Version: 2.8
+
+
+
+# ---------- PYVCP ----------
+
+net      spindle-rpm-filtered                  pyvcp.spindle-speed
+net      spindle-acc-val                       pyvcp.spindle-acc-f
+net      spindle-at-speed                      pyvcp.at-speed
+
+net      home-x                                pyvcp.home-x
+net      home-y                                pyvcp.home-y
+net      home-z                                pyvcp.home-z
+
+
+
