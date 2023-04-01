@@ -9,10 +9,11 @@ Minimal simulation configuration for a LinuxCNC milling machine with 3 simulated
 
 **Removing the PyVCP side panel**
 If you want to remove the panel, open *TinySim.ini* and comment out the following lines:
-'''
+
+```
 [DISPLAY]
 # PYVCP = TinySim_panel.xml
 
 [HAL]
 # POSTGUI_HALFILE = TinySim_postgui.hal
-'''
+```
