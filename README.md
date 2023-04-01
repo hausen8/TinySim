@@ -9,6 +9,7 @@ Minimal simulation configuration for a LinuxCNC milling machine with 3 simulated
 
 **Removing the PyVCP side panel**
 - If you want to remove the panel, open *TinySim.ini* and comment out the following lines:
+
 ```
 [DISPLAY]
 # PYVCP = TinySim_panel.xml
@@ -16,7 +17,9 @@ Minimal simulation configuration for a LinuxCNC milling machine with 3 simulated
 [HAL]
 # POSTGUI_HALFILE = TinySim_postgui.hal
 ```
+
 - Open *TinySim.hal* and set *limit_speed.maxv* to a fixed value:
+
 ```
 setp    limit_speed.maxv   5000
 # net   spindle-acc-val    limit_speed.maxv   <=
