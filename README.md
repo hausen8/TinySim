@@ -8,7 +8,7 @@ Minimal simulation configuration for a LinuxCNC milling machine with 3 simulated
  - If you want to remove the PyVCP side panel, please note that you have to set *spindle-acc-val* in *TinySim.hal* to a fixed value (i.e. 5000)
 
 **Removing the PyVCP side panel**
-If you want to remove the panel, open *TinySim.ini* and comment out the following lines:
+- If you want to remove the panel, open *TinySim.ini* and comment out the following lines:
 
 ```
 [DISPLAY]
