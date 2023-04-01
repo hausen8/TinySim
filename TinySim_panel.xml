@@ -1,94 +1,42 @@
+<!-- Author: Hausen 8 -->
+<!-- Last Edited: 23-04-01 -->
+
 <pyvcp>
-    <vbox>
-        <relief>RAISED</relief>
-        <bd>1</bd>
-        <label>
-            <text>"Spindle Speed"</text>
-        </label>
-        <bar>
-            <bgcolor>"#e5e5e5"</bgcolor>
-            <fillcolor>"#80b000"</fillcolor>
-            <halpin>"spindle-speed"</halpin>
-            <max_>30000</max_>
-        </bar>
-        <label>
-            <text>"Spindle Acceleration"</text>
-        </label>
-        <scale>
-            <width>"20"</width>
-            <halpin>"spindle-acc"</halpin>
-            <resolution>10</resolution>
-            <orient>HORIZONTAL</orient>
-            <initval>5000</initval>
-            <min_>10</min_>
-            <max_>10000</max_>
-            <param_pin>1</param_pin>
-        </scale>
-        <label>
-            <text>" "</text>
-        </label>
+    <vbox relief="raised" bd="1">
+        <label font="Helvetica, 1" text=" " />
+        <label text="Spindle Speed" />
+        <bar bgcolor="#e5e5e5" fillcolor="#80b000" max_="30000" halpin="spindle-speed" />
+        <label font="Helvetica, 2" text=" " />
+        <label text="Spindle Acceleration" />
+        <scale width="20" resolution="10" min_="10" max_="10000" initval="5000" param_pin="1" orient="horizontal" halpin="spindle-acc" />
+        <label font="Helvetica, 4" text=" " />
         <hbox>
-            <label>
-                <text>"spindle-at-speed"</text>
-                <width>22</width>
-            </label>
-            <rectled>
-                <halpin>"at-speed"</halpin>
-                <width>20</width>
-                <height>20</height>
-                <on_color>"#80b000"</on_color>
-                <off_color>"#ff3000"</off_color>
-            </rectled>
+            <label width="22" text="Spindle At Speed" />
+            <rectled width="20" height="20" on_color="#80b000" off_color="#ff3000" halpin="at-speed" />
         </hbox>
+        <label font="Helvetica, 1" text=" " />
     </vbox>
-    <vbox>
-        <relief>RAISED</relief>
-        <bd>1</bd>
+    <vbox relief="raised" bd="1">
+        <label font="Helvetica, 1" text=" " />
         <hbox>
-            <label>
-                <text>"home-x"</text>
-                <width>22</width>
-            </label>
-            <rectled>
-                <halpin>"home-x"</halpin>
-                <width>20</width>
-                <height>20</height>
-                <on_color>"#80b000"</on_color>
-                <off_color>"#ff3000"</off_color>
-            </rectled>
+            <label width="22" text="Home X" />
+            <rectled width="20" height="20" on_color="#80b000" off_color="#ff3000" halpin="home-x" />
         </hbox>
         <hbox>
-            <label>
-                <text>"home-y"</text>
-                <width>22</width>
-            </label>
-            <rectled>
-                <halpin>"home-y"</halpin>
-                <width>20</width>
-                <height>20</height>
-                <on_color>"#80b000"</on_color>
-                <off_color>"#ff3000"</off_color>
-            </rectled>
+            <label width="22" text="Home Y" />
+            <rectled width="20" height="20" on_color="#80b000" off_color="#ff3000" halpin="home-y" />
         </hbox>
         <hbox>
-            <label>
-                <text>"home-z"</text>
-                <width>22</width>
-            </label>
-            <rectled>
-                <halpin>"home-z"</halpin>
-                <width>20</width>
-                <height>20</height>
-                <on_color>"#80b000"</on_color>
-                <off_color>"#ff3000"</off_color>
-            </rectled>
+            <label width="22" text="Home Z" />
+            <rectled halpin="home-z" width="20" height="20" on_color="#80b000" off_color="#ff3000" />
         </hbox>
-            <button>
-                <halpin>"touch-all"</halpin>
-                <text>"G10 L20 P1 X0 Y0 Z0"</text>
-            </button>
+        <label font="Helvetica, 1" text=" " />
+        <hbox>
+            <label text=" " />
+            <button width="20" text="Touch Off All" halpin="touch-off-all" />
+        </hbox>
+        <label font="Helvetica, 1" text=" " />
     </vbox>
 </pyvcp>
-
 
 

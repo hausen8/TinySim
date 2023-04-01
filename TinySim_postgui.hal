@@ -1,17 +1,20 @@
-# Last Edited: 21-07-25
+# Author: Hausen 8
+# Last Edited: 23-04-01
 # LinuxCNC Version: 2.8
 
 
 
 # ---------- PYVCP ----------
+# If you want to remove the panel, set limit_speed.maxv in TinySim.hal to a fixed value (i.e. 5000)
 
-net      spindle-rpm-filtered                  pyvcp.spindle-speed
-net      spindle-acc-val                       pyvcp.spindle-acc-f
-net      spindle-at-speed                      pyvcp.at-speed
+net    spindle-rpm-filtered          pyvcp.spindle-speed             <=
+net    spindle-acc-val               pyvcp.spindle-acc-f             =>
+net    spindle-at-speed              pyvcp.at-speed                  <=
 
-net      home-x                                pyvcp.home-x
-net      home-y                                pyvcp.home-y
-net      home-z                                pyvcp.home-z
+net    home-x                        pyvcp.home-x                    =>
+net    home-y                        pyvcp.home-y                    =>
+net    home-z                        pyvcp.home-z                    =>
 
+net    touch-off-all                 pyvcp.touch-off-all             =>
 
 
